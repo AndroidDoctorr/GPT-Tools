@@ -58,3 +58,6 @@ class IdealPrompt {
     prompt: string
     completion: string
 }
+class Agent {
+    getSystemPrompt: Function
+}

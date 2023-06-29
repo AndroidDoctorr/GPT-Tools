@@ -4,7 +4,7 @@
   "description": "GPT Tools",
   "main": "index.js",
   "scripts": {
-    "prepare-data": "openai tools fine_tunes.prepare_data -f $npm_config_file"
+    "train-model": "openai tools fine_tunes.prepare_data -f $npm_config_file"
   },
   "author": "Andrew Torr",
   "license": "ISC",
