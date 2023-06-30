@@ -58,5 +58,16 @@ export class IdealPrompt {
     completion: string
 }
 export class Agent {
-    getSystemPrompt: Function
+    name?: string
+    role?: string
+    task?: string
+    format?: string
+    restrictions?: string
+    getSystemPrompt() {
+        return `${!!this.role && "As a " + this.role + ","}` +
+        ` ${this.task}.` +
+        ` ${!!this.name && "Your name is " + this.name + "."}` + 
+        ` Format your response as ${this.format}.` +
+        ` ${this.restrictions}`
+    }
 }
