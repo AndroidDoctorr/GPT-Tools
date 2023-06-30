@@ -1,6 +1,5 @@
-enum Role { system = 1, user, assistant, function }
-
-class ChatRequestBody
+export enum Role { system = 1, user, assistant, function }
+export class ChatRequestBody
 {
     messages: Array<ChatMessage>
     model: string
@@ -13,7 +12,7 @@ class ChatRequestBody
         if (temperature != undefined) this.temperature = temperature
     }
 }
-class ChatResponseBody
+export class ChatResponseBody
 {
     id: string
     object: string
@@ -22,7 +21,7 @@ class ChatResponseBody
     choices: Array<ChatResponse>
     usage: Usage
 }
-class ChatMessage {
+export class ChatMessage {
     role: Role
     content: string
 
@@ -31,7 +30,7 @@ class ChatMessage {
         this.content = message
     }
 }
-class ChatResponse {
+export class ChatResponse {
     index: number
     message: ChatMessage
     finish_reason: string
@@ -41,7 +40,7 @@ class ChatResponse {
         return this.index + ". " + this.message;
     }
 }
-class Usage {
+export class Usage {
     prompt_tokens: number
     completion_tokens: number
     total_tokens: number
@@ -51,13 +50,13 @@ class Usage {
         return "P Tokens: " + this.prompt_tokens + ", C Tokens: " + this.completion_tokens + ", Total: " + this.total_tokens;
     }
 }
-class DataSet {
+export class DataSet {
     data: Array<IdealPrompt>
 }
-class IdealPrompt {
+export class IdealPrompt {
     prompt: string
     completion: string
 }
-class Agent {
+export class Agent {
     getSystemPrompt: Function
 }
