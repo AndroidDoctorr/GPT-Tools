@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from 'axios'
+import { ChatMessage, Agent, Role } from './gpt-models'
 import { execSync } from 'child_process'
 import dotenv from 'dotenv'
 dotenv.config()
@@ -71,11 +72,11 @@ class ChatGPTClient {
             throw error
         }
     }
-    async createAgent(agent: Agent, model?: string, conversation?: Array<ChatMessage>): Promise<string> {
+    async createAgent(agent: Agent, model?: string, conversation?: Array<ChatMessage>, temperature?: number): Promise<string> {
         const systemMessage = new ChatMessage(agent.getSystemPrompt(), Role.system)
 
         const messages = conversation ? [systemMessage, ...conversation] : [systemMessage]
-        return this.continueConversation(messages)
+        return this.continueConversation(messages, model, temperature)
     }
 }
 
