@@ -1,15 +1,16 @@
 import axios, { AxiosInstance } from 'axios'
-import { ChatMessage, Agent, Role } from './gpt-models'
+import { ChatMessage, Agent, Role, ChatResponseBody } from './gpt-models'
 
 export default class GPTClient {
     private api: AxiosInstance
     private token: string
 
-    public defaultTemperature: 0.2
+    public defaultTemperature: number
 
     constructor() {
         // Load API key from .env
         this.token = process.env.REACT_APP_API_TOKEN as string
+        this.defaultTemperature = 0.2
         if (!this.token) {
             throw new Error('API_TOKEN environment variable is not set.')
         }
@@ -50,6 +51,12 @@ export default class GPTClient {
 
         return this.continueConversation(conversation)
     }
+    async createAgent(agent: Agent, model?: string, conversation?: Array<ChatMessage>, temperature?: number): Promise<string> {
+        const systemMessage = new ChatMessage(agent.getSystemPrompt(), Role.system)
+
+        const messages = conversation ? [systemMessage, ...conversation] : [systemMessage]
+        return this.continueConversation(messages, model, temperature)
+    }
     async continueConversation(messages: Array<ChatMessage>, model?: string, temperature?: number): Promise<string> {
         try {
             const response = await this.api.post('', {
@@ -59,16 +66,12 @@ export default class GPTClient {
                 max_tokens: 100
             })
 
-            return response.data.choices[0].text.trim()
+            let responseBody = new ChatResponseBody()
+            Object.assign(responseBody, response.data)
+            return responseBody.choices[0].message.content
         } catch (error) {
             console.error('Conversation failed:', error)
             throw error
         }
-    }
-    async createAgent(agent: Agent, model?: string, conversation?: Array<ChatMessage>, temperature?: number): Promise<string> {
-        const systemMessage = new ChatMessage(agent.getSystemPrompt(), Role.system)
-
-        const messages = conversation ? [systemMessage, ...conversation] : [systemMessage]
-        return this.continueConversation(messages, model, temperature)
     }
 }
