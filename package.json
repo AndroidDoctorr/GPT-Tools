@@ -1,17 +1,20 @@
 {
   "name": "gpt-tools",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "GPT Tools",
-  "main": "index.js",
+  "main": "dist/gpt-client.js",
   "scripts": {
-    "train-model": "openai tools fine_tunes.prepare_data -f $npm_config_file"
+    "build": "tsc",
+    "train-model": "openai tools fine_tunes.prepare_data -f $npm_config_file",
+    "test": "echo \"hey this is a test gj\" && exit 1"
   },
   "author": "Andrew Torr",
   "license": "ISC",
   "dependencies": {
     "@types/axios": "^0.14.0",
-    "axios": "^1.4.0",
-    "dotenv": "^16.3.1"
+    "axios": "0.27.2",
+    "dotenv": "^16.3.1",
+    "typescript": "^5.1.6"
   },
   "devDependencies": {
     "@types/node": "^20.3.2"

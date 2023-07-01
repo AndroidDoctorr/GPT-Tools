@@ -1,16 +1,15 @@
 import axios, { AxiosInstance } from 'axios'
 import { ChatMessage, Agent, Role } from './gpt-models'
-import { execSync } from 'child_process'
-import dotenv from 'dotenv'
-dotenv.config()
 
-class ChatGPTClient {
+export default class GPTClient {
     private api: AxiosInstance
     private token: string
 
+    public defaultTemperature: 0.2
+
     constructor() {
         // Load API key from .env
-        this.token = process.env.API_TOKEN as string
+        this.token = process.env.REACT_APP_API_TOKEN as string
         if (!this.token) {
             throw new Error('API_TOKEN environment variable is not set.')
         }
@@ -23,25 +22,19 @@ class ChatGPTClient {
             }
         })
     }
-    async singlePrompt(message: string): Promise<string> {
+    async singlePrompt(message: string, model?: string, temperature?: number): Promise<string> {
         try {
             const newMessage = new ChatMessage(message)
-
-            const response = await this.api.post('', {
-                messages: [newMessage],
-                max_tokens: 100
-            })
-
-            return response.data.choices[0].text.trim()
+            return await this.continueConversation([newMessage], model, temperature)
         } catch (error) {
             console.error('API request failed:', error)
             throw error
         }
     }
-    async createPTM(filePath: string) {
+    async createPTM(childProcess: any, filePath: string) {
         const command = `npm run train-model -- --file "${filePath}"`
         try {
-            const output = execSync(command, { encoding: 'utf8' })
+            const output = childProcess.execSync(command, { encoding: 'utf8' })
             console.log('Script execution completed.')
             console.log('Output:', output)
 
@@ -61,7 +54,7 @@ class ChatGPTClient {
         try {
             const response = await this.api.post('', {
                 model: model || 'gpt-3.5-turbo',
-                temperature: temperature == undefined ? 0.2 : temperature,
+                temperature: temperature == undefined ? this.defaultTemperature : temperature,
                 messages,
                 max_tokens: 100
             })
@@ -79,5 +72,3 @@ class ChatGPTClient {
         return this.continueConversation(messages, model, temperature)
     }
 }
-
-export const chatGPTClient = new ChatGPTClient()

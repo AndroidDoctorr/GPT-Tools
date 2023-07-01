@@ -1,10 +1,15 @@
-export enum Role { system = 1, user, assistant, function }
+export enum Role {
+    system = 'system',
+    user = 'user',
+    assistant = 'assistant',
+    function = 'function',
+}
 export class ChatRequestBody
 {
     messages: Array<ChatMessage>
-    model: string
-    max_tokens: number
-    temperature: number
+    model?: string
+    max_tokens?: number
+    temperature?: number
 
     constructor(messages: Array<ChatMessage>, model?: string, temperature?: number) {
         this.messages = messages
@@ -14,12 +19,12 @@ export class ChatRequestBody
 }
 export class ChatResponseBody
 {
-    id: string
-    object: string
-    created: number
-    model: string
-    choices: Array<ChatResponse>
-    usage: Usage
+    id?: string
+    object?: string
+    created?: number
+    model?: string
+    choices?: Array<ChatResponse>
+    usage?: Usage
 }
 export class ChatMessage {
     role: Role
@@ -31,9 +36,9 @@ export class ChatMessage {
     }
 }
 export class ChatResponse {
-    index: number
-    message: ChatMessage
-    finish_reason: string
+    index?: number
+    message?: ChatMessage
+    finish_reason?: string
 
     ToString()
     {
@@ -41,9 +46,9 @@ export class ChatResponse {
     }
 }
 export class Usage {
-    prompt_tokens: number
-    completion_tokens: number
-    total_tokens: number
+    prompt_tokens?: number
+    completion_tokens?: number
+    total_tokens?: number
 
     ToString()
     {
@@ -52,10 +57,19 @@ export class Usage {
 }
 export class DataSet {
     data: Array<IdealPrompt>
+    
+    constructor(data: Array<IdealPrompt>) {
+        this.data = data
+    }
 }
 export class IdealPrompt {
     prompt: string
     completion: string
+
+    constructor(prompt: string, completion: string) {
+        this.prompt = prompt
+        this.completion = completion
+    }
 }
 export class Agent {
     name?: string
