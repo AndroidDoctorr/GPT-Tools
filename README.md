@@ -104,6 +104,8 @@ flowchart TD
     style M fill:#fde
 ```
 
+[OpenAI Models](https://platform.openai.com/docs/models/overview)
+
 #### Agent
 
 This is a prepared conversation in which the model has been provided with a role via a system prompt, and possibly an existing conversation history.
