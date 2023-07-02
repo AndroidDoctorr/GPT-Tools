@@ -32,18 +32,10 @@ export default class GPTClient {
             throw error
         }
     }
-    async createPTM(childProcess: any, filePath: string) {
+    createPTM(filePath: string) {
         const command = `npm run train-model -- --file "${filePath}"`
-        try {
-            const output = childProcess.execSync(command, { encoding: 'utf8' })
-            console.log('Script execution completed.')
-            console.log('Output:', output)
-
-            // TODO: This should return a string with the name of the model
-            //     OR an object with more info?
-        } catch (error) {
-            console.error('Script execution failed:', error)
-        }
+        return command
+        // TODO: Figure out a way to make this usable in back-end implementations
     }
     async replyToConversation(messages: Array<ChatMessage>, nextMessage: string): Promise<string> {
         const nextChatMessage = new ChatMessage(nextMessage)

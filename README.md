@@ -15,6 +15,7 @@ To use this client, you will need to create a .env file to contain your API Key,
 
 You can import models and the GPT client from the package like so:
 
+    import GPTClient from 'gpt-tools';
     import { ChatMessage, ChatResponse } from 'gpt-tools/gpt-models';
 
 ## Tools
@@ -68,9 +69,16 @@ Creating an Agent also comes with the option of specifying a model, including an
 
 #### Create Pre-Trained Model
 
-This function takes in a file path of a dataset and prepares a pre-trained model from the input data, given an optional base model, and returns the ID of the new model, as a string.
+This function returns the npm command necessary to create a new model from the OpenAI CLI.
 
     async createPTM(filePath: string): string
+
+Add this script to your `package.json` to use the command from a server-side application:
+
+    "scripts":{
+        "train-model": "openai tools fine_tunes.prepare_data -f $npm_config_file",
+        ...
+    }
 
 ## Terms
 
