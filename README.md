@@ -1,6 +1,6 @@
 # GPT Tools
 
-This is a ChatGPT client that contains a set of typescript tools that interact with OpenAI's ChatGPT models.
+This is a ChatGPT client that contains a set of JavaScript tools that interact with OpenAI's ChatGPT models.
 
 ## Setup
 
@@ -17,6 +17,10 @@ You can import models and the GPT client from the package like so:
 
     import GPTClient from 'gpt-tools';
     import { ChatMessage, ChatResponse } from 'gpt-tools/gpt-models';
+
+## Example Usage:
+
+[Coming soon...]
 
 ## Tools
 
