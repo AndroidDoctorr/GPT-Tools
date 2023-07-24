@@ -4,19 +4,33 @@ This is a ChatGPT client that contains a set of JavaScript tools that interact w
 
 ## Setup
 
-Install this package in your npm project:
+To obtain your API key, create an account at [OpenAI.com](https://platform.openai.com/signup)
+
+Create your key in the [API Keys](https://platform.openai.com/account/api-keys) section
+
+**MAKE SURE TO COPY YOUR KEY as you won't get another chance to look at it!**
+
+Install this package in your project via npm or yarn:
 
     npm install gpt-tools
+
+<!-- - -->
+
+    yarn add gpt-tools
 
 To use this client, you will need to create a .env file to contain your API Key, like so:  
 .env:
 
     API_KEY=[API KEY]
 
+In a React application, you can set it with the REACT_APP prefix
+
+    REACT_APP_API_KEY=[API KEY]
+
 You can import models and the GPT client from the package like so:
 
     import GPTClient from 'gpt-tools';
-    import { ChatMessage, ChatResponse } from 'gpt-tools/gpt-models';
+    import { ChatMessage, ChatResponse } from 'gpt-tools/dist/gpt-models.js';
 
 ## Example Usage:
 
