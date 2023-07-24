@@ -1,6 +1,6 @@
 {
   "name": "gpt-tools",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "GPT Tools",
   "main": "dist/index.js",
   "scripts": {
