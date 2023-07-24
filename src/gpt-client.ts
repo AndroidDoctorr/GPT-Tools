@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from 'axios'
 import { ChatMessage, Agent, Role, ChatResponseBody } from './gpt-models'
 
-export default class GPTClient {
+export class GPTClient {
     private api: AxiosInstance
     private token: string
 
