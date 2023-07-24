@@ -1,12 +1,11 @@
 {
   "name": "gpt-tools",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "GPT Tools",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "train-model": "openai tools fine_tunes.prepare_data -f $npm_config_file",
-    "test": "echo \"hey this is a test gj\" && exit 1"
+    "train-model": "openai tools fine_tunes.prepare_data -f $npm_config_file"
   },
   "author": "Andrew Torr",
   "license": "ISC",
