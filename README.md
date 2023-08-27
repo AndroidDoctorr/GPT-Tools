@@ -2,6 +2,19 @@
 
 This is a ChatGPT client that contains a set of JavaScript tools that interact with OpenAI's ChatGPT models.
 
+
+Contact me here: [withtorr@gmail.com](mailto:withtorr@gmail.com)
+
+Or check out my video content here, where I discuss game development, programming, science, and technology:
+
+[WithTorr - YouTube](https://www.youtube.com/@withtorr)
+
+Or watch me stream - C#/Unity, Game development, and some good old fashioned gameplay
+
+[WithTorr on Twitch](https://www.twitch.tv/withtorr)
+
+
+
 ## Setup
 
 To obtain your API key, create an account at [OpenAI.com](https://platform.openai.com/signup)
