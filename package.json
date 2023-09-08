@@ -2,7 +2,7 @@
   "name": "gpt-tools",
   "version": "0.2.4",
   "description": "GPT Tools",
-  "main": "dist/index.js",
+  "main": "dist/gpt-client.js",
   "scripts": {
     "build": "tsc",
     "train-model": "openai tools fine_tunes.prepare_data -f $npm_config_file"
