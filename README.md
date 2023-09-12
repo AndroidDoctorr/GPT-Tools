@@ -2,7 +2,6 @@
 
 This is a ChatGPT client that contains a set of JavaScript tools that interact with OpenAI's ChatGPT models.
 
-
 Contact me here: [withtorr@gmail.com](mailto:withtorr@gmail.com)
 
 Or check out my video content here, where I discuss game development, programming, science, and technology:
@@ -12,8 +11,6 @@ Or check out my video content here, where I discuss game development, programmin
 Or watch me stream - C#/Unity, Game development, and some good old fashioned gameplay
 
 [WithTorr on Twitch](https://www.twitch.tv/withtorr)
-
-
 
 ## Setup
 
@@ -53,9 +50,10 @@ You can import models and the GPT client from the package like so:
 
 #### GPTClient
 
-The GPT Client is the container class for the tool set. This contains all the functions.
+The GPT Client is the container class for the tool set. This contains all the functions. Create an instance of the client using your OpenAI API key.
 
-    const client = new GPTClient();
+    const apiKey = process.env.REACT_APP_API_KEY;
+    const client = new GPTClient(apiKey);
 
 ## Functions
 
@@ -73,10 +71,10 @@ This function takes an existing set of messages and prompts the given model for 
 
 A `ChatMessage` is a prompt to or response from the model. Together, a list of `ChatMessages` makes a conversation. A conversation history can be given to a model to provide context for a response. A chat message has a role (System, User, Assistant, or Function), and some content (a string). The roles a message can have are:
 
-- user - The user prompting the model
-- assistant - The model's response
-- system - Contextual information given to the model
-- function_call - Some models have built-in functions. This will call a particular function.
+-   user - The user prompting the model
+-   assistant - The model's response
+-   system - Contextual information given to the model
+-   function_call - Some models have built-in functions. This will call a particular function.
 
 #### Create Agent
 
@@ -86,11 +84,11 @@ This function takes a prompt for an agent, optionally given a specific model and
 
 By default, an Agent has the (string) properties:
 
-- Name
-- Role
-- Task
-- Format
-- Restrictions
+-   Name
+-   Role
+-   Task
+-   Format
+-   Restrictions
 
 These properties are used to build a system prompt that prepares an `Agent`. This is done with the `getSystemPrompt` function.
 
@@ -170,9 +168,9 @@ flowchart TD
 Flavor refers to the purpose or format of a dataset, and/or a pre-trained model based on such a dataset. A model can be trained, for instance, to generate Agent data, or to generate sets of prompts for creating other models based on variable parameters, or to emulate a particular style of writing.
 Examples:
 
-- Prompt Generator
-- Agent Generator
-- Style Emulator
+-   Prompt Generator
+-   Agent Generator
+-   Style Emulator
 
 ```mermaid
 flowchart TD
