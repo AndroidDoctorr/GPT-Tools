@@ -2,15 +2,12 @@ import axios, { AxiosInstance } from 'axios'
 
 export class GPTClient {
     private api: AxiosInstance
-    private token: string
 
     public defaultTemperature: number
 
-    constructor() {
-        // Load API key from .env
-        this.token = process.env.REACT_APP_API_TOKEN as string
+    constructor(apiKey: string) {
         this.defaultTemperature = 0.2
-        if (!this.token) {
+        if (!apiKey) {
             throw new Error('API_TOKEN environment variable is not set.')
         }
 
@@ -18,7 +15,7 @@ export class GPTClient {
             baseURL: 'https://api.openai.com/v1/chat/completions',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.token}`
+                'Authorization': `Bearer ${apiKey}`
             }
         })
     }
