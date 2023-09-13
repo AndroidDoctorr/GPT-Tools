@@ -31,11 +31,15 @@ Install this package in your project via npm or yarn:
 To use this client, you will need to create a .env file to contain your API Key, like so:  
 .env:
 
-    API_KEY=[API KEY]
+    OPENAI_API_KEY=YourApiKeyGoesHere
 
 In a React application, you can set it with the REACT_APP prefix
 
-    REACT_APP_API_KEY=[API KEY]
+    REACT_APP_OPENAI_API_KEY=YourApiKeyGoesHere
+
+If you're using Vite, you'll want to use the VITE prefix:
+
+    VITE_OPENAI_API_KEY=YourApiKeyGoesHere
 
 You can import models and the GPT client from the package like so:
 
@@ -245,37 +249,6 @@ flowchart LR
     style D2 fill:#def
     style M2 fill:#fde,stroke-width:4
     style A2 fill:#fed,stroke-width:4
-```
-
-## Jobs
-
-#### Prompt Engineer
-
-Someone who works on refining prompt formation - syntax, content, etc.
-
-#### Dataset Curator
-
-Someone who looks through a large set of data and curates it towards creating prompts and ideal responses. Dataset curators need to know the specific Flavor of the Model or Agent is that their data is intended to produce.
-
-```mermaid
-flowchart LR
-    D[Data] --> C((Curator)) --> DS[(Dataset)]
-    style D fill:#def
-    style C fill:#efd
-    style DS fill:#edf
-```
-
-e.g.:
-
-##### Prompt Curator
-
-```mermaid
-flowchart LR
-    PG{PG} --> D["P(x)"] --> P((Prompt)) --> DS[(Prompts)]
-    style D fill:#def
-    style P fill:#efd
-    style PG fill:#fde,stroke-width:4
-    style DS fill:#edf
 ```
 
 ## To Do
