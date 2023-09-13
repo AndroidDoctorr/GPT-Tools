@@ -31,6 +31,15 @@ export class GPTClient {
             throw error
         }
     }
+    async singlePromptFull(message: string, model?: string, temperature?: number): Promise<ChatResponseBody> {
+        try {
+            const newMessage = new ChatMessage(message)
+            return await this.continueConversationFull([newMessage], model, temperature)
+        } catch (error) {
+            console.error('API request failed:', error)
+            throw error
+        }
+    }
     createPTM(filePath: string) {
         const command = `npm run train-model -- --file "${filePath}"`
         return command
@@ -40,6 +49,12 @@ export class GPTClient {
         const conversation = [...messages, nextChatMessage];
 
         return this.continueConversation(conversation)
+    }
+    async replyToConversationFull(messages: Array<ChatMessage>, nextMessage: string): Promise<ChatResponseBody> {
+        const nextChatMessage = new ChatMessage(nextMessage)
+        const conversation = [...messages, nextChatMessage];
+
+        return this.continueConversationFull(conversation)
     }
     async createAgent(agent: Agent, model?: string, conversation?: Array<ChatMessage>, temperature?: number): Promise<string> {
         const systemMessage = new ChatMessage(agent.getSystemPrompt(), Role.system)
