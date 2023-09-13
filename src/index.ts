@@ -47,6 +47,15 @@ export class GPTClient {
     }
     async continueConversation(messages: Array<ChatMessage>, model?: string, temperature?: number): Promise<string> {
         try {
+            let responseBody = await this.continueConversationFull(messages, model, temperature)
+            return responseBody.choices[0].message.content
+        } catch (error) {
+            console.error('Conversation failed:', error)
+            throw error
+        }
+    }
+    async continueConversationFull(messages: Array<ChatMessage>, model?: string, temperature?: number): Promise<ChatResponseBody> {
+        try {
             const response = await this.api.post('', {
                 model: model || 'gpt-3.5-turbo',
                 temperature: temperature == undefined ? this.defaultTemperature : temperature,
@@ -56,7 +65,7 @@ export class GPTClient {
 
             let responseBody = new ChatResponseBody()
             Object.assign(responseBody, response.data)
-            return responseBody.choices[0].message.content
+            return responseBody
         } catch (error) {
             console.error('Conversation failed:', error)
             throw error
