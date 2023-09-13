@@ -34,7 +34,6 @@ export class GPTClient {
     createPTM(filePath: string) {
         const command = `npm run train-model -- --file "${filePath}"`
         return command
-        // TODO: Figure out a way to make this usable in back-end implementations
     }
     async replyToConversation(messages: Array<ChatMessage>, nextMessage: string): Promise<string> {
         const nextChatMessage = new ChatMessage(nextMessage)
