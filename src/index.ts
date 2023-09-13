@@ -4,9 +4,11 @@ export class GPTClient {
     private api: AxiosInstance
 
     public defaultTemperature: number
+    public defaultModel: string
 
     constructor(apiKey: string) {
         this.defaultTemperature = 0.2
+        this.defaultModel = 'gpt-3.5-turbo'
 
         if (!apiKey) {
             throw new Error('OPENAI_API_KEY environment variable is not set - make sure to use the REACT_APP_ prefix if using React, or the VITE_ prefix if using Vite')
@@ -58,7 +60,7 @@ export class GPTClient {
     async continueConversationFull(messages: Array<ChatMessage>, model?: string, temperature?: number): Promise<ChatResponseBody> {
         try {
             const response = await this.api.post('', {
-                model: model || 'gpt-3.5-turbo',
+                model: model || this.defaultModel,
                 temperature: temperature == undefined ? this.defaultTemperature : temperature,
                 messages,
                 max_tokens: 100
