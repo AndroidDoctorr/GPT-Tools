@@ -7,8 +7,9 @@ export class GPTClient {
 
     constructor(apiKey: string) {
         this.defaultTemperature = 0.2
+
         if (!apiKey) {
-            throw new Error('API_TOKEN environment variable is not set.')
+            throw new Error('OPENAI_API_KEY environment variable is not set - make sure to use the REACT_APP_ prefix if using React, or the VITE_ prefix if using Vite')
         }
 
         this.api = axios.create({
