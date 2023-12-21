@@ -230,13 +230,13 @@ Return just the first response from a conversation completion request
 
 A simple one-time text prompt that returns a the first response content
 
-    async singlePrompt(message: string, model?: string, temperature?: number): Promise<string>
+    async singlePrompt(message: string, model?: string, temperature?: number, maxTokens?: number): Promise<string>
 
 #### Single Prompt Full
 
 A one-time text prompt that returns the entire response body
 
-    async singlePromptFull(message: string, model?: string, temperature?: number): Promise<ChatResponseBody>
+    async singlePromptFull(message: string, model?: string, temperature?: number, maxTokens?: number): Promise<ChatResponseBody>
 
 ### PTM (Pre-Trained Model) Helper Methods
 
