@@ -220,9 +220,9 @@ export class GPTClient {
         }
     }
     // Return just the first response from a conversation completion request
-    async continueConversation(messages: Array<ChatMessage>, model?: string, temperature?: number): Promise<string> {
+    async continueConversation(messages: Array<ChatMessage>, model?: string, temperature?: number, maxTokens?: number): Promise<string> {
         try {
-            let responseBody = await this.continueConversationFull(messages, model, temperature)
+            let responseBody = await this.continueConversationFull(messages, model, temperature, maxTokens)
             return responseBody.choices[0].message.content
         } catch (error) {
             console.error('Conversation failed:', error)
@@ -230,20 +230,20 @@ export class GPTClient {
         }
     }
     // A simple one-time text prompt that returns a the first response content
-    async singlePrompt(message: string, model?: string, temperature?: number): Promise<string> {
+    async singlePrompt(message: string, model?: string, temperature?: number, maxTokens?: number): Promise<string> {
         try {
             const newMessage = new ChatMessage(message)
-            return await this.continueConversation([newMessage], model, temperature)
+            return await this.continueConversation([newMessage], model, temperature, maxTokens)
         } catch (error) {
             console.error('API request failed:', error)
             throw error
         }
     }
     // A one-time text prompt that returns the entire response body
-    async singlePromptFull(message: string, model?: string, temperature?: number): Promise<ChatResponseBody> {
+    async singlePromptFull(message: string, model?: string, temperature?: number, maxTokens?: number): Promise<ChatResponseBody> {
         try {
             const newMessage = new ChatMessage(message)
-            return await this.continueConversationFull([newMessage], model, temperature)
+            return await this.continueConversationFull([newMessage], model, temperature, maxTokens)
         } catch (error) {
             console.error('API request failed:', error)
             throw error

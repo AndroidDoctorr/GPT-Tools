@@ -218,25 +218,25 @@ Take in a set of Chatroom messages and prompt a particular participant to contin
 
 Return the entire response body of a conversation completion request
 
-    async continueConversationFull(messages: Array<ChatMessage>, model?: string, temperature?: number): Promise<ChatResponseBody>
+    async continueConversationFull(messages: Array<ChatMessage>, model?: string, temperature?: number, maxTokens?: number): Promise<ChatResponseBody>
 
 #### Continue Conversation
 
 Return just the first response from a conversation completion request
 
-    async continueConversation(messages: Array<ChatMessage>, model?: string, temperature?: number): Promise<string>
+    async continueConversation(messages: Array<ChatMessage>, model?: string, temperature?: number, maxTokens?: number): Promise<string>
 
 #### Single Prompt
 
 A simple one-time text prompt that returns a the first response content
 
-    async singlePrompt(message: string, model?: string, temperature?: number): Promise<string>
+    async singlePrompt(message: string, model?: string, temperature?: number, maxTokens?: number): Promise<string>
 
 #### Single Prompt Full
 
 A one-time text prompt that returns the entire response body
 
-    async singlePromptFull(message: string, model?: string, temperature?: number): Promise<ChatResponseBody>
+    async singlePromptFull(message: string, model?: string, temperature?: number, maxTokens?: number): Promise<ChatResponseBody>
 
 ### PTM (Pre-Trained Model) Helper Methods
 
