@@ -202,13 +202,13 @@ export class GPTClient {
         return newMessage
     }
     // Return the entire response body of a conversation completion request
-    async continueConversationFull(messages: Array<ChatMessage>, model?: string, temperature?: number): Promise<ChatResponseBody> {
+    async continueConversationFull(messages: Array<ChatMessage>, model?: string, temperature?: number, maxTokens?: number): Promise<ChatResponseBody> {
         try {
             const response = await this.api.post('', {
                 model: model || this.defaultModel,
-                temperature: temperature == undefined ? this.defaultTemperature : temperature,
+                temperature: isNaN(temperature) ? this.defaultTemperature : temperature,
                 messages,
-                max_tokens: 100
+                max_tokens: isNaN(maxTokens) ? 1024 : maxTokens
             })
 
             let responseBody = new ChatResponseBody()
