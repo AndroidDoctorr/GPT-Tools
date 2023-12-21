@@ -218,13 +218,13 @@ Take in a set of Chatroom messages and prompt a particular participant to contin
 
 Return the entire response body of a conversation completion request
 
-    async continueConversationFull(messages: Array<ChatMessage>, model?: string, temperature?: number): Promise<ChatResponseBody>
+    async continueConversationFull(messages: Array<ChatMessage>, model?: string, temperature?: number, maxTokens?: number): Promise<ChatResponseBody>
 
 #### Continue Conversation
 
 Return just the first response from a conversation completion request
 
-    async continueConversation(messages: Array<ChatMessage>, model?: string, temperature?: number): Promise<string>
+    async continueConversation(messages: Array<ChatMessage>, model?: string, temperature?: number, maxTokens?: number): Promise<string>
 
 #### Single Prompt
 
