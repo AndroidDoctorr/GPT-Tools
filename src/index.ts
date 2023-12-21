@@ -220,9 +220,9 @@ export class GPTClient {
         }
     }
     // Return just the first response from a conversation completion request
-    async continueConversation(messages: Array<ChatMessage>, model?: string, temperature?: number): Promise<string> {
+    async continueConversation(messages: Array<ChatMessage>, model?: string, temperature?: number, maxTokens?: number): Promise<string> {
         try {
-            let responseBody = await this.continueConversationFull(messages, model, temperature)
+            let responseBody = await this.continueConversationFull(messages, model, temperature, maxTokens)
             return responseBody.choices[0].message.content
         } catch (error) {
             console.error('Conversation failed:', error)
