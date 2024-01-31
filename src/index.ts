@@ -21,7 +21,7 @@ export class GPTClient {
         }
 
         this.api = axios.create({
-            baseURL: 'https://api.openai.com/v1/chat/completions',
+            baseURL: 'https://api.openai.com/v1/',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${apiKey}`
@@ -204,7 +204,7 @@ export class GPTClient {
     // Return the entire response body of a conversation completion request
     async continueConversationFull(messages: Array<ChatMessage>, model?: string, temperature?: number, maxTokens?: number): Promise<ChatResponseBody> {
         try {
-            const response = await this.api.post('', {
+            const response = await this.api.post('chat/completions', {
                 model: model || this.defaultModel,
                 temperature: isNaN(temperature) ? this.defaultTemperature : temperature,
                 messages,
@@ -281,6 +281,132 @@ export class GPTClient {
 
         const messages = conversation ? [systemMessage, ...conversation] : [systemMessage]
         return this.continueConversation(messages, model, temperature)
+    }
+
+    // Assistant Methods
+
+    // Create Assistant
+    async createAssistant(assistant: AssistantCreate): Promise<Assistant> {
+        try {
+            const response = await this.api.post('assistants', assistant)
+            let responseBody = new Assistant()
+            Object.assign(responseBody, response.data)
+            return responseBody
+        } catch (error) {
+            console.error('Failed to create Assistant:', error)
+            throw error
+        }
+    }
+    // Create Assistant File
+    async createAssistantFile(assistantFile: AssistantFileCreate): Promise<AssistantFile> {
+        try {
+            const response = await this.api.post(`assistants/${assistantFile.assistant_id}/files`, assistantFile)
+            let responseBody = new AssistantFile()
+            Object.assign(responseBody, response.data)
+            return responseBody
+        } catch (error) {
+            console.error('Failed to create Assistant file:', error)
+            throw error
+        }
+    }
+    // Get Assistants
+    async getAssistants(assistantsRequestPrams: AssistantsRequest): Promise<Assistant[]> {
+        try {
+            const response = await this.api.get('assistants', { params: assistantsRequestPrams})
+            let responseBody = new AssistantsResult()
+            Object.assign(responseBody, response.data)
+            return responseBody.data
+        } catch (error) {
+            console.error('Failed to retrieve Assistants:', error)
+            throw error
+        }
+    }
+    // Get Assistant
+    async getAssistant(id: string): Promise<Assistant> {
+        try {
+            const response = await this.api.get(`assistants/${id}`)
+            let responseBody = new Assistant()
+            Object.assign(responseBody, response.data)
+            return responseBody
+        } catch (error) {
+            console.error('Failed to retrieve Assistant:', error)
+            throw error
+        }
+    }
+    // Update Assistant
+    async updateAssistant(assistant: AssistantCreate): Promise<Assistant> {
+        try {
+            const response = await this.api.post('assistants', assistant)
+            let responseBody = new Assistant()
+            Object.assign(responseBody, response.data)
+            return responseBody
+        } catch (error) {
+            console.error('Failed to update Assistant:', error)
+            throw error
+        }
+    }
+    // Delete Assistant
+    async deleteAssistant(id: string): Promise<Deleted> {
+        try {
+            const response = await this.api.delete(`assistants/${id}`)
+            let responseBody = new Deleted()
+            Object.assign(responseBody, response.data)
+            return responseBody
+        } catch (error) {
+            console.error('Failed to delete Assistant:', error)
+            throw error
+        }
+    }
+    // Remove Assistant File
+    async removeAssistantFile(assistant_id: string, file_id: string): Promise<Deleted> {
+        try {
+            const response = await this.api.delete(`assistants/${assistant_id}/files/${file_id}`)
+            let responseBody = new Deleted()
+            Object.assign(responseBody, response.data)
+            return responseBody
+        } catch (error) {
+            console.error('Failed to remove Assistant file:', error)
+            throw error
+        }
+    }
+
+    // File Methods
+
+    // Create File
+    async createFile(body: FileCreate): Promise<FileResponse> {
+        try {
+            const response = await this.api.post(`files`, body)
+            let responseBody = new FileResponse()
+            Object.assign(responseBody, response.data)
+            return responseBody
+        } catch (error) {
+            console.error('Failed to create File:', error)
+            throw error
+        }
+    }
+    // Get File
+    async getFile(id: string): Promise<FileResponse> {
+        try {
+            const response = await this.api.get(`files/${id}`)
+            let responseBody = new FileResponse()
+            Object.assign(responseBody, response.data)
+            return responseBody
+        } catch (error) {
+            console.error('Failed to retrieve File:', error)
+            throw error
+        }
+    }
+    // Delete File
+    async deleteFile(id: string): Promise<Deleted> {
+        try {
+            const response = await this.api.delete(`files/${id}`)
+            let responseBody = new Deleted()
+            Object.assign(responseBody, response.data)
+            return responseBody
+        } catch (error) {
+            console.error('Failed to delete File:', error)
+            throw error
+        }
     }
 }
 
@@ -453,4 +579,90 @@ export class Agent {
             ` Format your response as ${this.format}.` +
             ` ${this.restrictions}`
     }
+}
+/* * * * * * * * * * * * * * * * * * * * * * * *
+*                                               *
+*   Assistant Models                            *
+*                                               *
+* * * * * * * * * * * * * * * * * * * * * * * * */
+// Assistant - 
+export class Assistant {
+    id: string
+    object: string
+    created_at: number
+    name?: string
+    description?: string
+    model: string
+    instructions?: string
+    tools?: string[]
+    file_ids?: string[]
+    metadata?: object
+}
+// ToolType - Assistants have a limited number of tools available
+export enum ToolType {
+    code_interpreter,
+    retrieval,
+    function,
+}
+// AssistantTool - Assistants can have up to 128 tools attached
+export class AssistantTool {
+    type: ToolType
+    function?: object
+}
+export class AssistantsResult {
+    object: string
+    data: Assistant[]
+    first_id: string
+    last_id: string
+    has_more: boolean
+}
+// AssistantFile - Metadata for files attached to an Assistant
+export class AssistantFile {
+    id: string
+    object: string
+    created_at: number
+    assistant_id: string
+}
+// AssistantCreate - 
+export class AssistantCreate {
+    model: string 
+    name?: string
+    description?: string
+    instructions?: string
+    tools?: string[]
+    file_ids?: string[]
+    metadata?: object
+}
+export class AssistantFileCreate {
+    assistant_id: string
+    file_id: string
+}
+// AssistantsRequest - 
+export class AssistantsRequest {
+    limit?: number
+    order?: string
+    after?: string
+    before?: string
+}
+export class AssistantDelete {
+    id: string
+    object: string
+    deleted: boolean
+}
+export class FileCreate {
+    file: File
+    purpose: string
+}
+export class FileResponse {
+    id: string
+    object: string
+    bytes: number
+    created_at: number
+    filename: string
+    purpose: string
+}
+export class Deleted {
+    id: string
+    object: string
+    deleted: boolean
 }
