@@ -312,7 +312,7 @@ export class GPTClient {
     // Get Assistants
     async getAssistants(assistantsRequestPrams: AssistantsRequest): Promise<Assistant[]> {
         try {
-            const response = await this.api.get('assistants', { params: assistantsRequestPrams})
+            const response = await this.api.get('assistants', { params: assistantsRequestPrams })
             let responseBody = new AssistantsResult()
             Object.assign(responseBody, response.data)
             return responseBody.data
@@ -585,84 +585,141 @@ export class Agent {
 *   Assistant Models                            *
 *                                               *
 * * * * * * * * * * * * * * * * * * * * * * * * */
-// Assistant - 
+// Assistant - Represents an individual assistant configuration
 export class Assistant {
+    // Unique identifier for the assistant
     id: string
+    // Type of the object, usually 'assistant'
     object: string
+    // Timestamp when the assistant was created
     created_at: number
+    // Optional name for the assistant
     name?: string
+    // Optional description of the assistant's purpose or functionality
     description?: string
+    // The GPT model used by the assistant
     model: string
+    // Optional instructions for how the assistant should behave or be used
     instructions?: string
+    // Optional array of tools the assistant can use
     tools?: string[]
+    // Optional array of file identifiers associated with the assistant
     file_ids?: string[]
+    // Optional metadata providing additional information about the assistant
     metadata?: object
 }
-// ToolType - Assistants have a limited number of tools available
+// ToolType - Enum representing the types of tools an assistant can utilize
 export enum ToolType {
+    // Tool for interpreting and executing code
     code_interpreter,
+    // Tool for retrieving information or data
     retrieval,
+    // General-purpose tool for various functions
     function,
 }
-// AssistantTool - Assistants can have up to 128 tools attached
+// AssistantTool - Represents a tool that can be attached to an assistant
 export class AssistantTool {
+    // Type of the tool from the ToolType enum
     type: ToolType
+    // Optional object defining the specific function of the tool
     function?: object
 }
+// AssistantsResult - Represents a collection of assistants
 export class AssistantsResult {
-    object: string
-    data: Assistant[]
-    first_id: string
-    last_id: string
-    has_more: boolean
+    object: string  // Type of the object, usually 'list' indicating a list of assistants
+    data: Assistant[]  // Array of Assistant objects
+    first_id: string  // Identifier of the first assistant in the list
+    last_id: string  // Identifier of the last assistant in the list
+    has_more: boolean  // Boolean indicating if there are more assistants beyond this list
 }
-// AssistantFile - Metadata for files attached to an Assistant
-export class AssistantFile {
-    id: string
-    object: string
-    created_at: number
-    assistant_id: string
-}
-// AssistantCreate - 
+// AssistantCreate - Represents the data structure for creating a new assistant
 export class AssistantCreate {
-    model: string 
+    // The GPT model to be used by the new assistant
+    model: string
+    // Optional name for the new assistant
     name?: string
+    // Optional description for the new assistant
     description?: string
+    // Optional instructions for the new assistant
     instructions?: string
+    // Optional array of tools to be used by the new assistant
     tools?: string[]
+    // Optional array of file identifiers to be associated with the new assistant
     file_ids?: string[]
+    // Optional metadata for the new assistant
     metadata?: object
 }
-export class AssistantFileCreate {
+// AssistantFile - Represents metadata for files attached to an Assistant.
+export class AssistantFile {
+    // Unique identifier for the file.
+    id: string
+    // Type of the object, usually 'file'.
+    object: string
+    // Timestamp when the file was created.
+    created_at: number
+    // Identifier of the assistant to which this file is attached.
     assistant_id: string
+}
+// AssistantFileCreate - Represents the structure to create a new file attachment for an Assistant.
+export class AssistantFileCreate {
+    // Identifier of the assistant to which a file will be attached.
+    assistant_id: string
+    // The identifier of the file to attach to the assistant.
     file_id: string
 }
-// AssistantsRequest - 
+// AssistantsRequest - Represents the criteria for querying a list of Assistants.
 export class AssistantsRequest {
+    // Optional limit on the number of Assistants to return.
     limit?: number
+    // Optional order in which to return the Assistants ('asc' or 'desc').
     order?: string
+    // Optional identifier to specify the starting point for the query (for pagination).
     after?: string
+    // Optional identifier to specify the ending point for the query (for pagination).
     before?: string
 }
+// AssistantDelete - Represents the status of an Assistant after a delete operation.
 export class AssistantDelete {
+    // The identifier of the deleted assistant.
     id: string
+    // Type of the object, usually 'assistant'.
     object: string
+    // Boolean indicating whether the assistant was successfully deleted.
     deleted: boolean
 }
+/* * * * * * * * * * * * * * * * * * * * * * * *
+*                                               *
+*   File Models                                 *
+*                                               *
+* * * * * * * * * * * * * * * * * * * * * * * * */
+// FileCreate - Represents the structure for creating a new file in the system.
 export class FileCreate {
+    // The file object to be created.
     file: File
+    // The purpose or intended use of the file.
     purpose: string
 }
+// FileResponse - Represents the response data for a file-related query or operation.
 export class FileResponse {
+    // Unique identifier for the file.
     id: string
+    // Type of the object, usually 'file'.
     object: string
+    // Size of the file in bytes.
     bytes: number
+    // Timestamp when the file was created.
     created_at: number
+    // Name of the file.
     filename: string
+    // The purpose or intended use of the file.
     purpose: string
 }
+// Deleted - Represents the status of an object (such as a file or an assistant) after a delete operation.
 export class Deleted {
+    // The identifier of the deleted object.
     id: string
+    // Type of the object, indicating what kind of object was deleted.
     object: string
+    // Boolean indicating whether the object was successfully deleted.
     deleted: boolean
 }
