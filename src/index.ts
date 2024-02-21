@@ -324,7 +324,7 @@ export class GPTClient {
     // Get Assistant
     async getAssistant(id: string): Promise<Assistant> {
         try {
-            const response = await this.api.get(`assistants/${id}`)
+            const response = await this.api.get(`assistants/${id}`, { headers: { 'OpenAI-Beta': 'assistants=v1' } })
             let responseBody = new Assistant()
             Object.assign(responseBody, response.data)
             return responseBody
@@ -336,7 +336,7 @@ export class GPTClient {
     // Update Assistant
     async updateAssistant(assistant: AssistantCreate): Promise<Assistant> {
         try {
-            const response = await this.api.post('assistants', assistant)
+            const response = await this.api.post('assistants', assistant, { headers: { 'OpenAI-Beta': 'assistants=v1' } })
             let responseBody = new Assistant()
             Object.assign(responseBody, response.data)
             return responseBody
@@ -348,7 +348,7 @@ export class GPTClient {
     // Delete Assistant
     async deleteAssistant(id: string): Promise<Deleted> {
         try {
-            const response = await this.api.delete(`assistants/${id}`)
+            const response = await this.api.delete(`assistants/${id}`, { headers: { 'OpenAI-Beta': 'assistants=v1' } })
             let responseBody = new Deleted()
             Object.assign(responseBody, response.data)
             return responseBody
@@ -360,7 +360,7 @@ export class GPTClient {
     // Remove Assistant File
     async removeAssistantFile(assistant_id: string, file_id: string): Promise<Deleted> {
         try {
-            const response = await this.api.delete(`assistants/${assistant_id}/files/${file_id}`)
+            const response = await this.api.delete(`assistants/${assistant_id}/files/${file_id}`, { headers: { 'OpenAI-Beta': 'assistants=v1' } })
             let responseBody = new Deleted()
             Object.assign(responseBody, response.data)
             return responseBody
